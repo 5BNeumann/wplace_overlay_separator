@@ -19,6 +19,14 @@ def is_arbitrary(hexa: str, configuration: dict, colors_config: list) -> bool:
     for c in colors_config:
         if hexa == c["color"] and c["name"] in configuration["arbitrary"]:
             return True
+        if hexa == c["color"]:
+            print("sec trigger")
+            print(c["name"])
+            for a in configuration["arbitrary"]:
+                print(a, a is list)
+                if type(a) is list:
+                    print(c["name"] in a)
+                    return c["name"] in a
     return False
 
 
@@ -28,7 +36,11 @@ def get_color_index(he: str, configuration: dict, colors_config: list) -> int:
     """
     for c in colors_config:
         if he == str(c["color"]):
-            return configuration["arbitrary"].index(c["name"])
+            if c["name"] in configuration["arbitrary"]:
+                return configuration["arbitrary"].index(c["name"])
+            for a in configuration["arbitrary"]:
+                if type(a) is list and c["name"] in a:
+                    return configuration["arbitrary"].index(a)
     return 0
 
 
